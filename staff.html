@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="dist/output.css">
+    <style>
+        :root {
+            --main: #FFDC58;
+            --overlay: rgba(0, 0, 0, 0.8);
+            --bg: #FEF2E8;
+            --bw: #fff;
+            --blank: #000;
+            --border: #000;
+            --text: #000;
+            --mtext: #000;
+            --ring: #000;
+            --ring-offset: #fff;
+            --border-radius: 5px;
+            --box-shadow-x: 4px;
+            --box-shadow-y: 4px;
+            --reverse-box-shadow-x: -4px;
+            --reverse-box-shadow-y: -4px;
+            --base-font-weight: 500;
+            --heading-font-weight: 700;
+            --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+        }
+        .dark {
+            --bg: #374151;
+            --bw: #212121;
+            --blank: #fff;
+            --border: #000;
+            --text: #e6e6e6;
+            --mtext: #000;
+            --ring: #fff;
+            --ring-offset: #000;
+            --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+        }
+        .neo-brutal {
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow);
+            background-color: var(--bw);
+            border-radius: var(--border-radius);
+        }
+        .neo-brutal-sm {
+            border: 2px solid var(--border);
+            box-shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+            background-color: var(--bw);
+            border-radius: var(--border-radius);
+        }
+        .status-pill {
+            padding: 0.375rem 1rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--border);
+            font-weight: var(--base-font-weight);
+            font-size: 0.875rem;
+            display: inline-block;
+        }
+        .status-ready {
+            background-color: #bbf7d0;
+        }
+        .status-preparing {
+            background-color: #fef08a;
+        }
+        .status-waiting {
+            background-color: #e5e7eb;
+        }
+        .status-pickedup {
+            background-color: #d1d5db;
+            color: #4b5563;
+        }
+        .search-input {
+            width: 10rem;
+            padding: 0.5rem 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+        }
+        .search-input:focus {
+            outline: none;
+        }
+        .btn {
+            border: 2px solid var(--border);
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+            font-weight: var(--base-font-weight);
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--main);
+            color: var(--mtext);
+        }
+        .btn-secondary {
+            background-color: var(--bw);
+            color: var(--text);
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="py-4 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <img src="assets/logo_ig.jpg" alt="Zero Gravitea Logo" class="h-12 w-12 rounded-full border-2 border-black">
+                    <h1 class="text-2xl font-bold">Staff Portal</h1>
+                </div>
+                <div class="flex gap-4">
+                    <a href="index.html" class="neo-brutal-sm p-2 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    </a>
+                    <button id="logoutBtn" class="neo-brutal-sm p-2 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto mt-6 mb-8 px-4">
+        <div id="loginSection" class="neo-brutal p-6 mb-8">
+            <h2 class="text-xl font-bold mb-4">Staff Login</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block mb-2 font-medium">Username</label>
+                    <input type="text" id="username" class="w-full neo-brutal-sm p-2" placeholder="Enter username">
+                </div>
+                <div>
+                    <label for="password" class="block mb-2 font-medium">Password</label>
+                    <input type="password" id="password" class="w-full neo-brutal-sm p-2" placeholder="Enter password">
+                </div>
+                <div>
+                    <button id="loginBtn" class="btn btn-primary">Login</button>
+                </div>
+                <p id="loginError" class="text-red-500 hidden">Invalid username or password</p>
+            </div>
+        </div>
+
+        <div id="dashboardSection" class="hidden">
+            <div class="neo-brutal p-6 mb-8 bg-main">
+                <h2 class="text-xl font-bold mb-4">Currently Serving</h2>
+                <h3 id="currentlyServingDisplay" class="text-xl font-bold">None</h3>
+            </div>
+
+            <div class="mt-8 mb-8">
+                <div class="neo-brutal p-6">
+                    <h2 class="text-xl font-bold mb-4">Add New Order</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="orderNumber" class="block mb-2 font-medium">Order Number</label>
+                            <input type="number" id="orderNumber" class="neo-brutal-sm p-2" placeholder="Enter order number">
+                        </div>
+                        <div class="flex items-end">
+                            <button id="addOrderBtn" class="btn btn-primary">Add Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Order Management</h2>
+                <div class="relative">
+                    <input type="text" id="searchOrder" class="search-input w-40" placeholder="Search orders...">
+                </div>
+            </div>
+
+            <div class="space-y-4" id="ordersList">
+                <!-- Order management cards -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="env.js"></script>
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Load environment variables
+            const env = await loadEnv();
+            
+            // Initialize Firebase with environment variables
+            const firebaseConfig = {
+                apiKey: env.FIREBASE_API_KEY,
+                authDomain: env.FIREBASE_AUTH_DOMAIN,
+                databaseURL: env.FIREBASE_DATABASE_URL,
+                projectId: env.FIREBASE_PROJECT_ID,
+                storageBucket: env.FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
+                appId: env.FIREBASE_APP_ID
+            };
+            
+            firebase.initializeApp(firebaseConfig);
+            
+            // Firebase references
+            const database = firebase.database();
+            const ordersRef = database.ref('orders');
+            const settingsRef = database.ref('settings');
+            
+            // DOM elements
+            const loginSection = document.getElementById('loginSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const loginError = document.getElementById('loginError');
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+            const currentlyServingDisplay = document.getElementById('currentlyServingDisplay');
+            const ordersList = document.getElementById('ordersList');
+            const addOrderBtn = document.getElementById('addOrderBtn');
+            const orderNumber = document.getElementById('orderNumber');
+            const searchOrder = document.getElementById('searchOrder');
+            
+            // Check for existing login session
+            if (sessionStorage.getItem('staffLoggedIn') === 'true') {
+                loginSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+            }
+            
+            // Login functionality
+            loginBtn.addEventListener('click', () => {
+                if (username.value === env.STAFF_USERNAME && password.value === env.STAFF_PASSWORD) {
+                    sessionStorage.setItem('staffLoggedIn', 'true');
+                    loginSection.classList.add('hidden');
+                    dashboardSection.classList.remove('hidden');
+                    logoutBtn.classList.remove('hidden');
+                    loginError.classList.add('hidden');
+                } else {
+                    loginError.classList.remove('hidden');
+                }
+            });
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('staffLoggedIn');
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                logoutBtn.classList.add('hidden');
+                username.value = '';
+                password.value = '';
+            });
+            
+            // Order management
+            function loadOrders() {
+                ordersRef.on('value', (snapshot) => {
+                    const orders = snapshot.val();
+                    if (!orders) {
+                        ordersList.innerHTML = '<div class="neo-brutal p-4 text-center"><p>No orders found</p></div>';
+                        return;
+                    }
+                    
+                    ordersList.innerHTML = '';
+                    
+                    // Filter orders based on search
+                    const searchTerm = searchOrder.value.toLowerCase();
+                    
+                    for (const orderId in orders) {
+                        const order = orders[orderId];
+                        
+                        // Skip if doesn't match search
+                        if (searchTerm && orderId !== searchTerm) {
+                            continue;
+                        }
+                        
+                        const orderCard = document.createElement('div');
+                        orderCard.className = 'neo-brutal p-4 cursor-pointer';
+                        orderCard.dataset.order = orderId;
+                        orderCard.dataset.status = order.status || 'Waiting';
+                        
+                        let statusClass = 'status-waiting';
+                        const statusText = order.status || 'Waiting';
+                        
+                        if (statusText === 'Ready for Pickup') {
+                            statusClass = 'status-ready';
+                        } else if (statusText === 'Preparing') {
+                            statusClass = 'status-preparing';
+                        } else if (statusText === 'Waiting') {
+                            statusClass = 'status-waiting';
+                        } else if (statusText === 'Picked Up') {
+                            statusClass = 'status-pickedup';
+                        }
+                        
+                        // Format order time from stored timestamp
+                        const orderTime = formatOrderTime(order.timestamp);
+                        
+                        orderCard.innerHTML = `
+                            <div class="flex justify-between items-center mb-3">
+                                <div>
+                                    <p class="text-lg font-bold">Order #${orderId}</p>
+                                    <p class="text-xs text-gray-600">Ordered ${orderTime}</p>
+                                </div>
+                                <span class="status-pill ${statusClass} px-4 py-1.5">${statusText}</span>
+                            </div>
+                            <div class="flex justify-start gap-2 mt-4">
+                                <button class="btn btn-danger remove-btn" data-order="${orderId}">Remove</button>
+                            </div>
+                        `;
+                        
+                        ordersList.appendChild(orderCard);
+                    }
+                    
+                    // Add event listeners to order cards for status cycling
+                    const orderCards = document.querySelectorAll('#ordersList > div');
+                    orderCards.forEach(card => {
+                        card.addEventListener('click', (e) => {
+                            // Don't cycle status if clicking on the remove button
+                            if (e.target.classList.contains('remove-btn') || e.target.closest('.remove-btn')) {
+                                return;
+                            }
+                            
+                            const orderId = card.dataset.order;
+                            const currentStatus = card.dataset.status;
+                            const statuses = ["Waiting", "Preparing", "Ready for Pickup", "Picked Up"];
+                            
+                            let nextStatusIndex = (statuses.indexOf(currentStatus) + 1) % statuses.length;
+                            let newStatus = statuses[nextStatusIndex];
+                            
+                            // Update the status in Firebase
+                            ordersRef.child(orderId).update({ status: newStatus });
+                            
+                            // Update the card's status data attribute
+                            card.dataset.status = newStatus;
+                            
+                            // Update the status pill
+                            const statusPill = card.querySelector('.status-pill');
+                            statusPill.textContent = newStatus;
+                            statusPill.classList.remove('status-waiting', 'status-preparing', 'status-ready', 'status-pickedup');
+                            
+                            if (newStatus === 'Ready for Pickup') {
+                                statusPill.classList.add('status-ready');
+                            } else if (newStatus === 'Preparing') {
+                                statusPill.classList.add('status-preparing');
+                            } else if (newStatus === 'Waiting') {
+                                statusPill.classList.add('status-waiting');
+                            } else if (newStatus === 'Picked Up') {
+                                statusPill.classList.add('status-pickedup');
+                            }
+                            
+                            // Update Currently Serving if needed
+                            if (newStatus === 'Ready for Pickup') {
+                                updateCurrentlyServing();
+                            }
+                        });
+                    });
+                    
+                    // Add event listeners to remove buttons
+                    const removeButtons = document.querySelectorAll('.remove-btn');
+                    removeButtons.forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            e.stopPropagation(); // Prevent the card click event from firing
+                            if (confirm('Are you sure you want to remove this order?')) {
+                                const orderId = button.dataset.order;
+                                ordersRef.child(orderId).remove();
+                                updateCurrentlyServing();
+                            }
+                        });
+                    });
+                    
+                    // Update Currently Serving
+                    updateCurrentlyServing();
+                });
+            }
+            
+            function updateCurrentlyServing() {
+                // Find the latest ready order
+                ordersRef.once('value', (snapshot) => {
+                    const orders = snapshot.val();
+                    let latestReadyOrder = null;
+                    
+                    // Find the latest ready order
+                    for (const orderId in orders) {
+                        if (orders[orderId].status === "Ready for Pickup") {
+                            latestReadyOrder = orderId;
+                        }
+                    }
+                    
+                    currentlyServingDisplay.textContent = latestReadyOrder
+                        ? `Order #${latestReadyOrder}`
+                        : "None";
+                });
+            }
+            
+            // Search functionality
+            searchOrder.addEventListener('input', loadOrders);
+            
+            // Add new order
+            addOrderBtn.addEventListener('click', () => {
+                const id = orderNumber.value;
+                
+                if (!id) {
+                    alert('Please enter an order number');
+                    return;
+                }
+                
+                ordersRef.child(id).set({
+                    status: "Waiting",
+                    items: ['New Order'],
+                    timestamp: Date.now()
+                });
+                
+                orderNumber.value = '';
+            });
+            
+            // Add sample orders if none exist
+            function addSampleOrders() {
+                ordersRef.once('value', (snapshot) => {
+                    if (!snapshot.exists()) {
+                        // Add sample orders with realistic timestamps
+                        const now = Date.now();
+                        const sampleOrders = {
+                            '1': {
+                                status: 'Ready for Pickup',
+                                items: ['2× Bubble Tea', '1× Snack'],
+                                timestamp: now - (15 * 60 * 1000) // 15 minutes ago
+                            },
+                            '2': {
+                                status: 'Ready for Pickup',
+                                items: ['1× Milk Tea', '1× Taro Tea'],
+                                timestamp: now - (8 * 60 * 1000) // 8 minutes ago
+                            },
+                            '3': {
+                                status: 'Preparing',
+                                items: ['3× Classic Tea', '2× Boba Topping'],
+                                timestamp: now - (5 * 60 * 1000) // 5 minutes ago
+                            },
+                            '4': {
+                                status: 'Waiting',
+                                items: ['1× Special Brew', '1× Seasonal Tea'],
+                                timestamp: now - (2 * 60 * 1000) // 2 minutes ago
+                            }
+                        };
+                        
+                        ordersRef.set(sampleOrders);
+                        
+                        // Set currently serving
+                        settingsRef.child('currentlyServing').set(2);
+                    }
+                });
+            }
+            
+            // Helper function to format real timestamps
+            function formatOrderTime(timestamp) {
+                if (!timestamp) return 'unknown time';
+                
+                const now = Date.now();
+                const diff = now - timestamp;
+                const minutes = Math.floor(diff / (1000 * 60));
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                
+                if (minutes < 1) return 'just now';
+                if (minutes < 60) return `${minutes} minute${minutes === 1 ? '' : 's'} ago`;
+                if (hours < 24) return `${hours} hour${hours === 1 ? '' : 's'} ago`;
+                return `${days} day${days === 1 ? '' : 's'} ago`;
+            }
+            
+            // Load orders on page load
+            loadOrders();
+            addSampleOrders();
+        });
+    </script>
+</body>
+</html>

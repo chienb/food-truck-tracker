@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main: #FFDC58;
+  --overlay: rgba(0, 0, 0, 0.8); /* background color overlay for alert dialogs, modals, etc. */
+
+  --bg: #FEF2E8;
+  --bw: #fff; /* white and secondary black e.g. utility class variant would be: bg-[#fff] dark:bg-[#212121] */
+  --blank: #000; /* blank black and white */
+  --border: #000;
+  --text: #000;
+  --mtext: #000; /* text that is placed on background with main color e.g. text color of default button */
+  --ring: #000;
+  --ring-offset: #fff;
+
+  --border-radius: 5px;
+  --box-shadow-x: 4px;
+  --box-shadow-y: 4px;
+  --reverse-box-shadow-x: -4px;
+  --reverse-box-shadow-y: -4px;
+  --base-font-weight: 500;
+  --heading-font-weight: 700;
+
+  --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+}
+
+.dark {
+  --bg: #374151;
+  --bw: #212121;
+  --blank: #fff;
+  --border: #000;
+  --text: #e6e6e6;
+  --mtext: #000;
+  --ring: #fff;
+  --ring-offset: #000;
+
+  --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .neo-brutal {
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    background-color: var(--bw);
+  }
+  .neo-brutal-sm {
+    border: 2px solid var(--border);
+    box-shadow: var(--shadow);
+    background-color: var(--bw);
+  }
+  .status-pill {
+    padding: 0.375rem 1rem;
+    border-radius: 0.375rem;
+    border: 2px solid var(--border);
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
+  .status-ready {
+    background-color: #bbf7d0;
+  }
+  .status-preparing {
+    background-color: #fef08a;
+  }
+  .status-waiting {
+    background-color: #e5e7eb;
+  }
+  .search-input {
+    width: 10rem;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: 0.375rem;
+    outline: none;
+  }
+  .btn {
+    border: 2px solid var(--border);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  .btn-primary {
+    background-color: var(--main);
+    color: var(--mtext);
+  }
+  .btn-secondary {
+    background-color: var(--bw);
+    color: var(--text);
+  }
+  
+  /* UI Components */
+  .ui-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border);
+    background-color: var(--main);
+    color: var(--mtext);
+    font-weight: var(--base-font-weight);
+    padding: 0.5rem 1rem;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+  }
+  .ui-button:hover {
+    transform: translateX(var(--box-shadow-x)) translateY(var(--box-shadow-y));
+    box-shadow: none;
+  }
+  
+  .ui-button-secondary {
+    background-color: var(--bw);
+    color: var(--text);
+  }
+  
+  .ui-button-outline {
+    background-color: transparent;
+    color: var(--text);
+  }
+  
+  .ui-card {
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border);
+    background-color: var(--bw);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .ui-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border);
+    padding: 0.375rem 1rem;
+    font-size: 0.875rem;
+    font-weight: var(--base-font-weight);
+  }
+  
+  .ui-badge-ready {
+    background-color: #bbf7d0;
+  }
+  
+  .ui-badge-preparing {
+    background-color: #fef08a;
+  }
+  
+  .ui-badge-waiting {
+    background-color: #e5e7eb;
+  }
+  
+  .ui-input {
+    width: 100%;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--border);
+    background-color: var(--bw);
+    padding: 0.5rem 0.75rem;
+    color: var(--text);
+    box-shadow: var(--shadow);
+  }
+  .ui-input:focus {
+    outline: none;
+  }
+  
+  .ui-input-search {
+    width: 10rem;
+  }
+}
