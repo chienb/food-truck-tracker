@@ -4,7 +4,8 @@
   "description": "Food Truck Order Tracker",
   "main": "index.js",
   "scripts": {
-    "dev": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch"
+    "dev": "npx tailwindcss -i ./index.css -o ./dist/output.css --watch",
+    "build": "npx tailwindcss -i ./index.css -o ./dist/output.css --minify"
   },
   "dependencies": {
     "firebase": "^10.8.0"
