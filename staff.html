@@ -189,7 +189,12 @@
             </div>
 
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold">Order Management</h2>
+                <div class="flex items-center gap-4">
+                    <h2 class="text-xl font-bold">Order Management</h2>
+                    <button id="deleteAllOrdersBtn" class="text-red-600 hover:text-red-800 text-sm font-medium underline cursor-pointer">
+                        Delete All Orders
+                    </button>
+                </div>
                 <div class="relative">
                     <input type="text" id="searchOrder" class="search-input w-40" placeholder="Search orders...">
                 </div>
@@ -246,6 +251,7 @@
             const toggleSlider = document.getElementById('toggleSlider');
             const toggleLabel = document.getElementById('toggleLabel');
             const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+            const deleteAllOrdersBtn = document.getElementById('deleteAllOrdersBtn');
             
             // Check for existing login session
             if (sessionStorage.getItem('staffLoggedIn') === 'true') {
@@ -338,6 +344,20 @@
             
             // Initialize settings
             loadSettings();
+            
+            // Delete all orders functionality
+            deleteAllOrdersBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to delete ALL orders? This action cannot be undone.')) {
+                    ordersRef.remove().then(() => {
+                        alert('All orders have been deleted.');
+                        updateCurrentlyServing();
+                        loadOrders();
+                    }).catch((error) => {
+                        console.error('Error deleting all orders:', error);
+                        alert('Error deleting orders. Please try again.');
+                    });
+                }
+            });
             
             // Order management
             function loadOrders() {
