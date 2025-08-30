@@ -159,13 +159,10 @@
                         <input type="text" id="eventName" class="w-full neo-brutal-sm p-2" placeholder="Enter event name (e.g., Baldwin Park Farmers Market)">
                     </div>
                     <div class="flex items-center gap-3">
-                        <label class="block font-medium">Order Tracking:</label>
-                        <div class="flex items-center gap-2">
-                            <span id="toggleLabel">Enabled</span>
-                            <div class="neo-brutal-sm bg-gray-300 w-12 h-6 rounded-full cursor-pointer relative" id="trackingToggle">
-                                <div class="bg-green-500 w-5 h-5 rounded-full absolute top-0.5 left-0.5 transition-all duration-300" id="toggleSlider"></div>
-                            </div>
-                        </div>
+                        <label class="flex items-center gap-2 font-medium cursor-pointer">
+                            <input type="checkbox" id="trackingToggle" class="neo-brutal-sm w-5 h-5" checked>
+                            <span>Order Tracking Enabled</span>
+                        </label>
                     </div>
                     <div>
                         <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
@@ -243,8 +240,6 @@
             const searchOrder = document.getElementById('searchOrder');
             const eventName = document.getElementById('eventName');
             const trackingToggle = document.getElementById('trackingToggle');
-            const toggleSlider = document.getElementById('toggleSlider');
-            const toggleLabel = document.getElementById('toggleLabel');
             const saveSettingsBtn = document.getElementById('saveSettingsBtn');
             
             // Check for existing login session
@@ -277,50 +272,21 @@
                 password.value = '';
             });
             
-            // Settings state
-            let isTrackingEnabled = true;
-            
             // Load settings from Firebase
             function loadSettings() {
                 settingsRef.on('value', (snapshot) => {
                     const settings = snapshot.val();
                     if (settings) {
-                        isTrackingEnabled = settings.trackingEnabled !== false;
+                        trackingToggle.checked = settings.trackingEnabled !== false;
                         eventName.value = settings.eventName || '';
-                        updateToggleUI();
                     }
                 });
             }
             
-            // Update toggle UI
-            function updateToggleUI() {
-                if (isTrackingEnabled) {
-                    toggleSlider.style.transform = 'translateX(24px)';
-                    toggleSlider.classList.remove('bg-gray-500');
-                    toggleSlider.classList.add('bg-green-500');
-                    toggleLabel.textContent = 'Enabled';
-                    trackingToggle.classList.remove('bg-gray-300');
-                    trackingToggle.classList.add('bg-green-200');
-                } else {
-                    toggleSlider.style.transform = 'translateX(0)';
-                    toggleSlider.classList.remove('bg-green-500');
-                    toggleSlider.classList.add('bg-gray-500');
-                    toggleLabel.textContent = 'Disabled';
-                    trackingToggle.classList.remove('bg-green-200');
-                    trackingToggle.classList.add('bg-gray-300');
-                }
-            }
-            
-            // Toggle tracking
-            trackingToggle.addEventListener('click', () => {
-                isTrackingEnabled = !isTrackingEnabled;
-                updateToggleUI();
-            });
-            
             // Save settings
             saveSettingsBtn.addEventListener('click', () => {
                 const settings = {
-                    trackingEnabled: isTrackingEnabled,
+                    trackingEnabled: trackingToggle.checked,
                     eventName: eventName.value.trim()
                 };
                 
