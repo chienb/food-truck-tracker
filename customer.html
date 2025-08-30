@@ -100,8 +100,11 @@
         </div>
     </header>
 
-    <div class="max-w-4xl mx-auto mt-6 mb-8 px-4">
+    <div class="max-w-4xl mx-auto mt-6 mb-8 px-4" id="trackingContent">
         <div class="neo-brutal p-6 mb-8 bg-main">
+            <div class="mb-4" id="eventNameSection">
+                <h3 class="text-lg font-medium" id="eventNameDisplay"></h3>
+            </div>
             <h2 class="text-xl font-bold mb-2">Currently Serving</h2>
             <p class="text-3xl font-bold" id="currentlyServingDisplay">Order #2</p>
         </div>
@@ -115,6 +118,18 @@
 
         <div class="space-y-4" id="orderCards">
             <!-- Order cards will be dynamically generated here -->
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mt-6 mb-8 px-4 hidden" id="trackingDisabledContent">
+        <div class="neo-brutal p-6 mb-8 bg-gray-300">
+            <div class="text-center">
+                <h2 class="text-xl font-bold mb-4">Order Tracking Unavailable</h2>
+                <p class="text-lg">Order tracking is currently disabled. Please check back later or contact us directly.</p>
+                <div class="mt-4">
+                    <a href="tel:626-899-8943" class="btn btn-primary">Call Us: (626) 899-8943</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -149,11 +164,39 @@
             // Reference to orders in Firebase
             const ordersRef = database.ref('orders');
             const currentlyServingRef = database.ref('currentlyServing');
+            const settingsRef = database.ref('settings');
             
             // DOM elements
             const orderCards = document.getElementById('orderCards');
             const currentlyServingDisplay = document.getElementById('currentlyServingDisplay');
             const searchOrder = document.getElementById('searchOrder');
+            const trackingContent = document.getElementById('trackingContent');
+            const trackingDisabledContent = document.getElementById('trackingDisabledContent');
+            const eventNameDisplay = document.getElementById('eventNameDisplay');
+            const eventNameSection = document.getElementById('eventNameSection');
+            
+            // Listen for settings updates
+            settingsRef.on('value', (snapshot) => {
+                const settings = snapshot.val();
+                const isTrackingEnabled = settings ? settings.trackingEnabled !== false : true;
+                const eventName = settings ? settings.eventName || '' : '';
+                
+                if (isTrackingEnabled) {
+                    trackingContent.classList.remove('hidden');
+                    trackingDisabledContent.classList.add('hidden');
+                } else {
+                    trackingContent.classList.add('hidden');
+                    trackingDisabledContent.classList.remove('hidden');
+                }
+                
+                // Update event name
+                if (eventName) {
+                    eventNameDisplay.textContent = eventName;
+                    eventNameSection.classList.remove('hidden');
+                } else {
+                    eventNameSection.classList.add('hidden');
+                }
+            });
             
             // Listen for currently serving updates
         currentlyServingRef.on('value', (snapshot) => {

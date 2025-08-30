@@ -101,7 +101,7 @@
                     </div>
                 </div>
                 <div class="flex gap-4">
-                    <a href="/customer" class="btn btn-primary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
+                    <a href="/customer" id="trackOrderBtn" class="btn btn-primary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
                         Track Your Order
                     </a>
                     <a href="/staff" class="btn btn-secondary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
@@ -265,6 +265,56 @@
                 }
             });
         });
+        });
+    </script>
+
+    <!-- Firebase integration for tracking settings -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="env-generated.js"></script>
+    <script>
+        // Initialize Firebase and check tracking settings
+        loadEnv().then(env => {
+            const firebaseConfig = {
+                apiKey: env.FIREBASE_API_KEY,
+                authDomain: env.FIREBASE_AUTH_DOMAIN,
+                databaseURL: env.FIREBASE_DATABASE_URL,
+                projectId: env.FIREBASE_PROJECT_ID,
+                storageBucket: env.FIREBASE_STORAGE_BUCKET,
+                messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
+                appId: env.FIREBASE_APP_ID
+            };
+            
+            firebase.initializeApp(firebaseConfig);
+            
+            const database = firebase.database();
+            const settingsRef = database.ref('settings');
+            const trackOrderBtn = document.getElementById('trackOrderBtn');
+            
+            // Listen for settings updates
+            settingsRef.on('value', (snapshot) => {
+                const settings = snapshot.val();
+                const isTrackingEnabled = settings ? settings.trackingEnabled !== false : true;
+                
+                if (isTrackingEnabled) {
+                    trackOrderBtn.textContent = 'Track Your Order';
+                    trackOrderBtn.href = '/customer';
+                    trackOrderBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                    trackOrderBtn.classList.add('btn-primary');
+                    trackOrderBtn.onclick = null;
+                } else {
+                    trackOrderBtn.textContent = 'Order tracking unavailable';
+                    trackOrderBtn.href = '#';
+                    trackOrderBtn.classList.remove('btn-primary');
+                    trackOrderBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                    trackOrderBtn.onclick = (e) => {
+                        e.preventDefault();
+                        alert('Order tracking is currently unavailable. Please call us at (626) 899-8943 for order updates.');
+                    };
+                }
+            });
+        }).catch(error => {
+            console.error('Error loading Firebase:', error);
         });
     </script>
 </body>
