@@ -163,7 +163,6 @@
             
             // Reference to orders in Firebase
             const ordersRef = database.ref('orders');
-            const currentlyServingRef = database.ref('currentlyServing');
             const settingsRef = database.ref('settings');
             
             // DOM elements
@@ -198,13 +197,27 @@
                 }
             });
             
-            // Listen for currently serving updates
-        currentlyServingRef.on('value', (snapshot) => {
-            const currentlyServing = snapshot.val();
-            if (currentlyServing) {
-                currentlyServingDisplay.textContent = `Order #${currentlyServing}`;
+            // Update currently serving display
+            function updateCurrentlyServing() {
+                // Find the latest ready order
+                ordersRef.once('value', (snapshot) => {
+                    const orders = snapshot.val();
+                    let latestReadyOrder = null;
+                    
+                    if (orders) {
+                        // Find the latest ready order
+                        for (const orderId in orders) {
+                            if (orders[orderId].status === "Ready for Pickup") {
+                                latestReadyOrder = orderId;
+                            }
+                        }
+                    }
+                    
+                    currentlyServingDisplay.textContent = latestReadyOrder
+                        ? `Order #${latestReadyOrder}`
+                        : "None";
+                });
             }
-            });
             
             // Add sample orders if none exist (for demo purposes)
             function addSampleOrders() {
@@ -225,6 +238,7 @@
                 const orders = snapshot.val();
                 if (!orders) {
                     orderCards.innerHTML = '<div class="neo-brutal p-4 text-center"><p>No orders found</p></div>';
+                    updateCurrentlyServing();
                     return;
                 }
                 
@@ -239,6 +253,9 @@
                     const orderCard = createOrderCard(order);
                     orderCards.appendChild(orderCard);
                 });
+                
+                // Update currently serving display
+                updateCurrentlyServing();
                 });
             }
             
