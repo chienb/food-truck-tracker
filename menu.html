@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Zero Gravitea Food Truck</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="dist/output.css">
+    <style>
+        :root {
+            --main: #FFDC58;
+            --overlay: rgba(0, 0, 0, 0.8);
+            --bg: #FEF2E8;
+            --bw: #fff;
+            --blank: #000;
+            --border: #000;
+            --text: #000;
+            --mtext: #000;
+            --ring: #000;
+            --ring-offset: #fff;
+            --border-radius: 5px;
+            --box-shadow-x: 4px;
+            --box-shadow-y: 4px;
+            --reverse-box-shadow-x: -4px;
+            --reverse-box-shadow-y: -4px;
+            --base-font-weight: 500;
+            --heading-font-weight: 700;
+            --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+        }
+        
+        /* Neo-brutalism styles */
+        .neo-brutal {
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow);
+            background-color: var(--bw);
+        }
+        .neo-brutal-sm {
+            border: 2px solid var(--border);
+            box-shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+            background-color: var(--bw);
+        }
+        .btn {
+            border: 2px solid var(--border);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--main);
+            color: var(--mtext);
+        }
+        .btn-secondary {
+            background-color: var(--bw);
+            color: var(--text);
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+        }
+        
+        /* Menu image styling */
+        .menu-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .menu-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: var(--border-radius);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .menu-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div class="flex items-center">
+                    <div class="h-16 w-16 rounded-full flex items-center justify-center mr-5">
+                        <img src="assets/logo_ig.jpg" alt="Zero Gravitea Logo" class="h-14 w-14 rounded-full border-2 border-black">
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold">Zero Gravitea</h1>
+                        <p class="text-lg text-gray-600">Menu</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <a href="/" class="btn btn-secondary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
+                        Back to Home
+                    </a>
+                    <a href="/customer" class="btn btn-primary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
+                        Track Your Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <section class="neo-brutal p-6 mb-8 bg-main">
+                <h2 class="text-2xl font-bold mb-4">Our Menu</h2>
+                <p class="mb-4">
+                    Explore our cosmic selection of bubble tea drinks, from classic milk teas to innovative specialty flavors. 
+                    All drinks are made fresh to order with premium ingredients.
+                </p>
+                <p>
+                    You can customize your drink's sweetness and ice level to your preference!
+                </p>
+            </section>
+
+            <section class="neo-brutal p-6">
+                <div class="menu-container">
+                    <img src="assets/menu.jpg" alt="Zero Gravitea Menu" class="menu-image neo-brutal">
+                </div>
+            </section>
+
+            <section class="neo-brutal p-6 mt-8 bg-main">
+                <h3 class="text-xl font-bold mb-4">Ready to Order?</h3>
+                <p class="mb-4">
+                    Visit us at one of our locations or track your current order status.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/" class="btn btn-secondary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all text-center">
+                        Find Our Locations
+                    </a>
+                    <a href="/customer" class="btn btn-primary hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all text-center">
+                        Track Your Order
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="py-6 px-4 border-t-2 border-black mt-12">
+        <div class="max-w-4xl mx-auto text-center">
+            <p class="mb-2 font-medium">
+                Zero Gravitea Food Truck
+            </p>
+            <p class="text-sm mb-4">
+                Follow us on social media for daily locations and specials!
+            </p>
+            <div class="flex justify-center">
+                <a href="https://www.instagram.com/zero_gravitea_tw" target="_blank" class="neo-brutal-sm p-2 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+            </div>
+            <p class="text-sm mt-4">
+                &copy; 2025 Zero Gravitea. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
