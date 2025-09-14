@@ -287,8 +287,9 @@
             // Format order time from stored timestamp
             const orderTime = formatOrderTime(order.timestamp);
             
-            // Handle items display - only show items if they exist and are not empty
-            const hasItems = order.items && Array.isArray(order.items) && order.items.length > 0 && order.items[0] !== '';
+            // Handle items display - only show items if they exist and are not empty, and filter out 'New Order'
+            const hasItems = order.items && Array.isArray(order.items) && order.items.length > 0 && 
+                             order.items[0] !== '' && order.items[0] !== 'New Order';
             const itemsDisplay = hasItems ? order.items.join(', ') : '';
             
             card.innerHTML = `
