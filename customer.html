@@ -226,15 +226,6 @@
                 });
             }
             
-            // Add sample orders if none exist (for demo purposes)
-            function addSampleOrders() {
-            ordersRef.once('value', (snapshot) => {
-                if (!snapshot.exists()) {
-                    // Sample orders will be added by staff.html
-                    console.log("No orders found. Sample orders will be added when staff portal is loaded.");
-                }
-                });
-            }
             
             // Load orders from Firebase
             function loadOrders() {
@@ -336,7 +327,6 @@
         
             // Load orders on page load
             loadOrders();
-            addSampleOrders();
         });
     </script>
 </body>

@@ -524,41 +524,10 @@
                 orderNumber.value = '';
             });
             
-            // Add sample orders if none exist
+            // Sample orders function disabled to prevent automatic mock data creation
             function addSampleOrders() {
-                ordersRef.once('value', (snapshot) => {
-                    if (!snapshot.exists()) {
-                        // Add sample orders with realistic timestamps
-                        const now = Date.now();
-                        const sampleOrders = {
-                            '1': {
-                                status: 'Ready for Pickup',
-                                items: ['2× Bubble Tea', '1× Snack'],
-                                timestamp: now - (15 * 60 * 1000) // 15 minutes ago
-                            },
-                            '2': {
-                                status: 'Ready for Pickup',
-                                items: ['1× Milk Tea', '1× Taro Tea'],
-                                timestamp: now - (8 * 60 * 1000) // 8 minutes ago
-                            },
-                            '3': {
-                                status: 'Preparing',
-                                items: ['3× Classic Tea', '2× Boba Topping'],
-                                timestamp: now - (5 * 60 * 1000) // 5 minutes ago
-                            },
-                            '4': {
-                                status: 'Waiting',
-                                items: ['1× Special Brew', '1× Seasonal Tea'],
-                                timestamp: now - (2 * 60 * 1000) // 2 minutes ago
-                            }
-                        };
-                        
-                        ordersRef.set(sampleOrders);
-                        
-                        // Set currently serving
-                        settingsRef.child('currentlyServing').set(2);
-                    }
-                });
+                // Function disabled - no sample orders will be created automatically
+                console.log('Sample orders function disabled');
             }
             
             // Helper function to format real timestamps
