@@ -287,17 +287,16 @@
             // Format order time from stored timestamp
             const orderTime = formatOrderTime(order.timestamp);
             
-            // Handle items display - if items is an array, join it, otherwise use a default message
-            const itemsDisplay = order.items && Array.isArray(order.items) 
-                ? order.items.join(', ') 
-                : (order.items || 'No items');
+            // Handle items display - only show items if they exist and are not empty
+            const hasItems = order.items && Array.isArray(order.items) && order.items.length > 0 && order.items[0] !== '';
+            const itemsDisplay = hasItems ? order.items.join(', ') : '';
             
             card.innerHTML = `
                 <div class="flex justify-between items-center mb-3">
                     <p class="text-lg font-bold">Order #${order.id}</p>
                     <span class="status-pill ${statusClass} px-4 py-1.5">${statusText}</span>
                 </div>
-                <p class="text-sm mb-2">${itemsDisplay}</p>
+                ${itemsDisplay ? `<p class="text-sm mb-2">${itemsDisplay}</p>` : ''}
             `;
             
                 return card;
