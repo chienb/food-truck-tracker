@@ -86,7 +86,10 @@
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <img src="assets/logo_ig.jpg" alt="Zero Gravitea Logo" class="h-12 w-12 rounded-full border-2 border-black">
-                    <h1 class="text-2xl font-bold">Order Tracker</h1>
+                    <div>
+                        <h1 class="text-2xl font-bold">Order Tracker</h1>
+                        <p class="text-sm text-gray-600">626-899-8943</p>
+                    </div>
                 </div>
                 <div class="flex gap-4">
                     <a href="tel:626-899-8943" class="neo-brutal-sm p-2 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
@@ -291,7 +294,6 @@
                     <span class="status-pill ${statusClass} px-4 py-1.5">${statusText}</span>
                 </div>
                 <p class="text-sm mb-2">${itemsDisplay}</p>
-                <p class="text-xs text-gray-600">Ordered ${orderTime}</p>
             `;
             
                 return card;
