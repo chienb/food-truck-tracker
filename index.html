@@ -148,14 +148,9 @@
             <section class="neo-brutal p-6 mt-12">
                 <h2 class="text-xl font-bold mb-4">Follow us on Instagram</h2>
                 <div class="flex justify-center">
-                    <a href="https://www.instagram.com/zero_gravitea_tw" target="_blank" rel="noopener" class="neo-brutal-sm block w-full max-w-md p-4 hover:translate-y-0.5 hover:translate-x-0.5 hover:shadow-none transition-all">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="assets/logo_ig.jpg" alt="" class="h-10 w-10 rounded-full border-2 border-black">
-                            <span class="font-bold">@zero_gravitea_tw</span>
-                        </div>
-                        <img src="assets/truck.svg" alt="Zero Gravitea food truck illustration" class="w-full h-auto mb-4">
-                        <div class="btn btn-primary text-center">View us on Instagram</div>
-                    </a>
+                    <div id="ig-feed" class="neo-brutal-sm w-full max-w-xl overflow-hidden">
+                        <iframe src="https://www.instagram.com/zero_gravitea_tw/embed/" title="Zero Gravitea on Instagram" loading="lazy" scrolling="no" class="block w-full border-0" style="height:720px"></iframe>
+                    </div>
                 </div>
             </section>
         </div>
@@ -182,6 +177,16 @@
     
     
     <script>
+        // Size the Instagram profile embed: header (~147px, grows a bit past 450px wide) + two rows of square tiles
+        function sizeIgFeed() {
+            const frame = document.querySelector('#ig-feed iframe');
+            if (!frame) return;
+            const w = frame.offsetWidth;
+            frame.style.height = Math.round(w * 2 / 3 + 151 + Math.max(0, (w - 450) * 0.1)) + 'px';
+        }
+        window.addEventListener('resize', sizeIgFeed);
+        document.addEventListener('DOMContentLoaded', sizeIgFeed);
+
         // Wait for DOM to be loaded
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize map centered on Southern California
