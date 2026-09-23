@@ -145,14 +145,9 @@
                 </section>
             </div>
 
-            <section class="neo-brutal p-6 mt-12">
-                <h2 class="text-xl font-bold mb-4">Follow us on Instagram</h2>
-                <div class="flex justify-center">
-                    <div id="ig-feed" class="neo-brutal-sm w-full max-w-xl overflow-hidden">
-                        <iframe src="https://www.instagram.com/zero_gravitea_tw/embed/" title="Zero Gravitea on Instagram" loading="lazy" scrolling="no" class="block w-full border-0" style="height:720px"></iframe>
-                    </div>
-                </div>
-            </section>
+            <div id="ig-feed" class="neo-brutal overflow-hidden mt-12">
+                <iframe src="https://www.instagram.com/zero_gravitea_tw/embed/" title="Zero Gravitea on Instagram" loading="lazy" scrolling="no" class="block w-full border-0" style="height:720px"></iframe>
+            </div>
         </div>
     </main>
 
@@ -177,12 +172,12 @@
     
     
     <script>
-        // Size the Instagram profile embed: header (~147px, grows a bit past 450px wide) + two rows of square tiles
+        // Size the Instagram profile embed: header (~147px, grows up to 12px between 450-570px wide) + two rows of square tiles
         function sizeIgFeed() {
             const frame = document.querySelector('#ig-feed iframe');
             if (!frame) return;
             const w = frame.offsetWidth;
-            frame.style.height = Math.round(w * 2 / 3 + 151 + Math.max(0, (w - 450) * 0.1)) + 'px';
+            frame.style.height = Math.round(w * 2 / 3 + 151 + Math.min(12, Math.max(0, (w - 450) * 0.1))) + 'px';
         }
         window.addEventListener('resize', sizeIgFeed);
         document.addEventListener('DOMContentLoaded', sizeIgFeed);
